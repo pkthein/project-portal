@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { Navigate } from 'react-router-dom';
 
-import { ROUTES } from 'src/constants/RouteConstants';
+import { ROUTES } from 'src/constants/RoutesConstants';
 
 const propTypes = {
   component: PropTypes.node.isRequired,
@@ -17,7 +17,7 @@ const defaultProps = {
 
 const AuthCheck = ({ component, pathToRedirect, reverse }) => {
   // TODO: retrieve state from redux inside `AuthCheck`
-  const loggedIn = false;
+  const loggedIn = true;
 
   if (reverse) {
     return loggedIn ? <Navigate replace={true} to={pathToRedirect} /> : component;

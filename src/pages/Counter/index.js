@@ -1,21 +1,27 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import {
-  decrement,
-  increment,
-  incrementByAmount,
-  incrementAsync,
-  incrementIfOdd,
-  selectCount,
-} from './counterSlice';
+
+import CounterActions from 'src/redux/actions/CounterActions';
+
 import styles from './Counter.module.css';
 
-export function Counter() {
-  const count = useSelector(selectCount);
+const propTypes = {};
+const defaultProps = {};
+
+const Counter = () => {
   const dispatch = useDispatch();
+
+  const { value } = useSelector((state) => state.counter);
+
   const [incrementAmount, setIncrementAmount] = useState('2');
 
   const incrementValue = Number(incrementAmount) || 0;
+
+  const handleAddIfOddOnClick = () => {
+    if (value % 2) {
+      dispatch(CounterActions.updateCounter({ value: value + incrementValue }));
+    }
+  };
 
   return (
     <div>
@@ -23,15 +29,15 @@ export function Counter() {
         <button
           className={styles.button}
           aria-label="Decrement value"
-          onClick={() => dispatch(decrement())}
+          onClick={() => dispatch(CounterActions.updateCounter({ value: value - 1 }))}
         >
           -
         </button>
-        <span className={styles.value}>{count}</span>
+        <span className={styles.value}>{value}</span>
         <button
           className={styles.button}
           aria-label="Increment value"
-          onClick={() => dispatch(increment())}
+          onClick={() => dispatch(CounterActions.updateCounter({ value: value + 1 }))}
         >
           +
         </button>
@@ -45,20 +51,25 @@ export function Counter() {
         />
         <button
           className={styles.button}
-          onClick={() => dispatch(incrementByAmount(incrementValue))}
+          onClick={() => dispatch(CounterActions.updateCounter({ value: value + incrementValue }))}
         >
           Add Amount
         </button>
         <button
           className={styles.asyncButton}
-          onClick={() => dispatch(incrementAsync(incrementValue))}
+          onClick={() => dispatch(CounterActions.incrementAsync(incrementValue))}
         >
           Add Async
         </button>
-        <button className={styles.button} onClick={() => dispatch(incrementIfOdd(incrementValue))}>
+        <button className={styles.button} onClick={handleAddIfOddOnClick}>
           Add If Odd
         </button>
       </div>
     </div>
   );
-}
+};
+
+Counter.propTypes = propTypes;
+Counter.defaultProps = defaultProps;
+
+export default Counter;

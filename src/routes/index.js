@@ -1,12 +1,13 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 
-import { ROUTES } from 'src/constants/RouteConstants';
+import { ROUTES } from 'src/constants/RoutesConstants';
 
 import LogIn from 'src/pages/LogIn';
 import SignIn from 'src/pages/SignIn';
+import Home from 'src/pages/Home';
+import Counter from 'src/pages/Counter';
 import NotFoundPage from 'src/pages/NotFoundPage';
-import { Counter } from 'src/features/counter/Counter';
 
 import AuthCheck from './AuthCheck';
 
@@ -26,8 +27,8 @@ const routes = () => (
         path="/"
         element={<AuthCheck component={<Navigate replace={true} to={ROUTES.HOME} />} />}
       />
-      {/* replace `Counter` with `Home` once built */}
-      <Route path={ROUTES.HOME} element={<AuthCheck component={<Counter />} />} />
+      <Route path={ROUTES.HOME} element={<AuthCheck component={<Home />} />} />
+      <Route path={ROUTES.COUNTER} element={<AuthCheck component={<Counter />} />} />
 
       {/** 404 * */}
       <Route path={ROUTES.ALL} element={<AuthCheck component={<NotFoundPage />} />} />
